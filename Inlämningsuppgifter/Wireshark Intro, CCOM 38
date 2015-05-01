@@ -31,45 +31,38 @@ Hampus Lidin, hampuslidin@gmail.com
   repectively (the format of the answers have been shortened and
   rearranged, to display only what we want to see):
 
-  $ ifconfig
+      $ ifconfig
 
-  en0:
-    Flags:        8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
-    ETHERNET:     20:c9:d0:7f:0f:25
-	  IPv4 (inet):  Address:   192.168.43.219
-                  Netmask:   0xffffff00
-                  Broadcast: 192.168.43.255
-                  
-  C:> ipconfig /all
+      en0:
+	      Flags:        8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	      ETHERNET:     20:c9:d0:7f:0f:25
+		    IPv4 (inet):  Address:   192.168.43.219
+	                    Netmask:   0xffffff00
+	                    Broadcast: 192.168.43.255
+	    
+	    ----------------------------------------------------------------------------
+	                  
+      C:> ipconfig /all
   
-  Windows IP Configuration
+      Wireless LAN adapter Wireless Network Connection:
 
-  	Host Name . . . . . . . . . . . . : Skinkan-PC
-    Primary Dns Suffix  . . . . . . . :
-    Node Type . . . . . . . . . . . . : Hybrid
-    IP Routing Enabled. . . . . . . . : No
-    WINS Proxy Enabled. . . . . . . . : No
-    
-  
-  Wireless LAN adapter Wireless Network Connection:
+      Connection-specific DNS Suffix  . :
+      Description . . . . . . . . . . . : Broadcom 802.11n Network Adapter
+      Physical Address. . . . . . . . . : 20-C9-D0-7F-0F-25
+      DHCP Enabled. . . . . . . . . . . : Yes
+      Autoconfiguration Enabled . . . . : Yes
+      Link-local IPv6 Address . . . . . : fe80::6046:472a:63f5:468e%11(Preferred)
+      IPv4 Address. . . . . . . . . . . : 192.168.43.219(Preferred)
+      Subnet Mask . . . . . . . . . . . : 255.255.255.0
+      Lease Obtained. . . . . . . . . . : den 1 maj 2015 10:46:20
+      Lease Expires . . . . . . . . . . : den 1 maj 2015 11:46:19
+      Default Gateway . . . . . . . . . : 192.168.43.1
+      DHCP Server . . . . . . . . . . . : 192.168.43.1
+      DHCPv6 IAID . . . . . . . . . . . : 237029840
+      DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-1C-36-2B-4E-20-C9-D0-7F-0F-25
 
-    Connection-specific DNS Suffix  . :
-    Description . . . . . . . . . . . : Broadcom 802.11n Network Adapter
-    Physical Address. . . . . . . . . : 20-C9-D0-7F-0F-25
-    DHCP Enabled. . . . . . . . . . . : Yes
-    Autoconfiguration Enabled . . . . : Yes
-    Link-local IPv6 Address . . . . . : fe80::6046:472a:63f5:468e%11(Preferred)
-    IPv4 Address. . . . . . . . . . . : 192.168.43.219(Preferred)
-    Subnet Mask . . . . . . . . . . . : 255.255.255.0
-    Lease Obtained. . . . . . . . . . : den 1 maj 2015 10:46:20
-    Lease Expires . . . . . . . . . . : den 1 maj 2015 11:46:19
-    Default Gateway . . . . . . . . . : 192.168.43.1
-    DHCP Server . . . . . . . . . . . : 192.168.43.1
-    DHCPv6 IAID . . . . . . . . . . . : 237029840
-    DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-1C-36-2B-4E-20-C9-D0-7F-0F-25
-
-    DNS Servers . . . . . . . . . . . : 192.168.43.1
-    NetBIOS over Tcpip. . . . . . . . : Enabled
+      DNS Servers . . . . . . . . . . . : 192.168.43.1
+      NetBIOS over Tcpip. . . . . . . . : Enabled
 
 5:
   The command "ipconfig /displaydns" in Windows is used to display all the cached
@@ -83,54 +76,55 @@ Hampus Lidin, hampuslidin@gmail.com
 
 6:
   We start by searching the domain www.google.com for it's IP:
-  $ nslookup www.google.com
   
-  Server:		192.168.1.1
-  Address:	192.168.1.1#53
+      $ nslookup www.google.com
+  
+      Server:		192.168.1.1
+      Address:	192.168.1.1#53
 
-  Non-authoritative answer:
-  Name:	www.google.com
-  Address: 216.58.209.132
+      Non-authoritative answer:
+      Name:	www.google.com
+      Address: 216.58.209.132
   
   Here we see that the local DNS-server with IP-address 192.168.1.1 was queried, and
   the answer we got was that www.google.com has an IP-address of 216.58.209.132. If
   we where to exclude the subdomain www from the hostname, nslookup gives us an
   entirely different answer:
   
-  $ nslookup google.com
+      $ nslookup google.com
   
-  Server:		192.168.1.1
-  Address:	192.168.1.1#53
+      Server:		192.168.1.1
+      Address:	192.168.1.1#53
 
-  Non-authoritative answer:
-  Name:	google.com
-  Address: 80.251.202.24
-  Name:	google.com
-  Address: 80.251.202.35
-  Name:	google.com
-  Address: 80.251.202.26
-  ...
+      Non-authoritative answer:
+      Name:	google.com
+      Address: 80.251.202.24
+      Name:	google.com
+      Address: 80.251.202.35
+      Name:	google.com
+      Address: 80.251.202.26
+      ...
   
   This is due to the fact that the domains google.com and www.google.com are located
   in different places (servers), hence the IP-addresses are different.
   
   Now we want to search for the authorative name servers for google.com:
   
-  $ nslookup -type=NS google.com
-  Server:		192.168.1.1
-  Address:	192.168.1.1#53
+      $ nslookup -type=NS google.com
+      Server:		192.168.1.1
+      Address:	192.168.1.1#53
 
-  Non-authoritative answer:
-  google.com	nameserver = ns2.google.com.
-  google.com	nameserver = ns1.google.com.
-  google.com	nameserver = ns4.google.com.
-  google.com	nameserver = ns3.google.com.
+      Non-authoritative answer:
+      google.com	nameserver = ns2.google.com.
+      google.com	nameserver = ns1.google.com.
+      google.com	nameserver = ns4.google.com.
+      google.com	nameserver = ns3.google.com.
 
-  Authoritative answers can be found from:
-  ns4.google.com	internet address = 216.239.38.10
-  ns2.google.com	internet address = 216.239.34.10
-  ns1.google.com	internet address = 216.239.32.10
-  ns3.google.com	internet address = 216.239.36.10
+      Authoritative answers can be found from:
+      ns4.google.com	internet address = 216.239.38.10
+      ns2.google.com	internet address = 216.239.34.10
+      ns1.google.com	internet address = 216.239.32.10
+      ns3.google.com	internet address = 216.239.36.10
   
   The first answer we got was non-authorative, indicating that the answer was fetched
   locally rather than querying one of the authorative servers directly. Nevertheless,
@@ -140,11 +134,11 @@ Hampus Lidin, hampuslidin@gmail.com
   Lastly, we will have a look in what would happen if we'd be querying one of the name
   servers of google.com with a different domain:
   
-  $ nslookup www.en.wikipedia.org ns2.google.com
-  Server:		ns2.google.com
-  Address:	216.239.34.10#53
+      $ nslookup www.en.wikipedia.org ns2.google.com
+      Server:		ns2.google.com
+      Address:	216.239.34.10#53
 
-  ** server can't find www.en.wikipedia.org.huawei.com: REFUSED
+      ** server can't find www.en.wikipedia.org.huawei.com: REFUSED
   
   The answer obviously couldn't be found, since ns2.google.com is an authorative name
   server specifically operating for the domain google.com.
