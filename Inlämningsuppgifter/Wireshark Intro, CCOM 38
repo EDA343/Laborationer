@@ -27,8 +27,9 @@ Hampus Lidin, hampuslidin@gmail.com
   The host IP is then 192.168.43.219, and the server IP 128.119.245.12.
 
 4:
-  As partly seen in the Mac OSX terminal (the format of the answer has
-  been shortened and rearranged to display what we want to see):
+  As partly seen in the Mac OSX terminal and Windows command window,
+  repectively (the format of the answers have been shortened and
+  rearranged, to display only what we want to see):
 
   $ ifconfig
 
@@ -38,6 +39,47 @@ Hampus Lidin, hampuslidin@gmail.com
 	  IPv4 (inet):  Address:   192.168.43.219
                   Netmask:   0xffffff00
                   Broadcast: 192.168.43.255
+                  
+  C:> ipconfig /all
+  
+  Windows IP Configuration
+
+  	Host Name . . . . . . . . . . . . : Skinkan-PC
+    Primary Dns Suffix  . . . . . . . :
+    Node Type . . . . . . . . . . . . : Hybrid
+    IP Routing Enabled. . . . . . . . : No
+    WINS Proxy Enabled. . . . . . . . : No
+    
+  
+  Wireless LAN adapter Wireless Network Connection:
+
+    Connection-specific DNS Suffix  . :
+    Description . . . . . . . . . . . : Broadcom 802.11n Network Adapter
+    Physical Address. . . . . . . . . : 20-C9-D0-7F-0F-25
+    DHCP Enabled. . . . . . . . . . . : Yes
+    Autoconfiguration Enabled . . . . : Yes
+    Link-local IPv6 Address . . . . . : fe80::6046:472a:63f5:468e%11(Preferred)
+    IPv4 Address. . . . . . . . . . . : 192.168.43.219(Preferred)
+    Subnet Mask . . . . . . . . . . . : 255.255.255.0
+    Lease Obtained. . . . . . . . . . : den 1 maj 2015 10:46:20
+    Lease Expires . . . . . . . . . . : den 1 maj 2015 11:46:19
+    Default Gateway . . . . . . . . . : 192.168.43.1
+    DHCP Server . . . . . . . . . . . : 192.168.43.1
+    DHCPv6 IAID . . . . . . . . . . . : 237029840
+    DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-1C-36-2B-4E-20-C9-D0-7F-0F-25
+
+    DNS Servers . . . . . . . . . . . : 192.168.43.1
+    NetBIOS over Tcpip. . . . . . . . : Enabled
+
+5:
+  The command "ipconfig /displaydns" in Windows is used to display all the cached
+  domain names stored on the computer. Each entry has a timer that determines how
+  long the entry remains in the cache. It's useful to see which web servers the
+  host most recently has visited.
+  
+  If the host for some reason wants to clear the cahce, the "ipconfig /flushdns"
+  command can be used. It will delete each and every entry in the cache. This
+  is useful if the host wants to "restart" a web session.
 
 6:
   $ nslookup www.masalakitchen.se
