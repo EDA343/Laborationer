@@ -82,22 +82,69 @@ Hampus Lidin, hampuslidin@gmail.com
   is useful if the host wants to "restart" a web session.
 
 6:
-  $ nslookup www.masalakitchen.se
-  Server:		192.168.43.1
-  Address:	192.168.43.1#53
+  We start by searching the domain www.google.com for it's IP:
+  $ nslookup www.google.com
+  
+  Server:		192.168.1.1
+  Address:	192.168.1.1#53
 
   Non-authoritative answer:
-  www.masalakitchen.se	canonical name = masalakitchen.se.
-  Name:	masalakitchen.se
-  Address: 109.74.1.223
-
-  $ nslookup -type=NS www.masalakitchen.se
-  Server:		192.168.43.1
-  Address:	192.168.43.1#53
+  Name:	www.google.com
+  Address: 216.58.209.132
+  
+  Here we see that the local DNS-server with IP-address 192.168.1.1 was queried, and
+  the answer we got was that www.google.com has an IP-address of 216.58.209.132. If
+  we where to exclude the subdomain www from the hostname, nslookup gives us an
+  entirely different answer:
+  
+  $ nslookup google.com
+  
+  Server:		192.168.1.1
+  Address:	192.168.1.1#53
 
   Non-authoritative answer:
-  www.masalakitchen.se	canonical name = masalakitchen.se.
-  masalakitchen.se	nameserver = ns1.smsgruppen.com.
-  masalakitchen.se	nameserver = ns2.smsgruppen.com.
+  Name:	google.com
+  Address: 80.251.202.24
+  Name:	google.com
+  Address: 80.251.202.35
+  Name:	google.com
+  Address: 80.251.202.26
+  ...
+  
+  This is due to the fact that the domains google.com and www.google.com are located
+  in different places (servers), hence the IP-addresses are different.
+  
+  Now we want to search for the authorative name servers for google.com:
+  
+  $ nslookup -type=NS google.com
+  Server:		192.168.1.1
+  Address:	192.168.1.1#53
+
+  Non-authoritative answer:
+  google.com	nameserver = ns2.google.com.
+  google.com	nameserver = ns1.google.com.
+  google.com	nameserver = ns4.google.com.
+  google.com	nameserver = ns3.google.com.
 
   Authoritative answers can be found from:
+  ns4.google.com	internet address = 216.239.38.10
+  ns2.google.com	internet address = 216.239.34.10
+  ns1.google.com	internet address = 216.239.32.10
+  ns3.google.com	internet address = 216.239.36.10
+  
+  The first answer we got was non-authorative, indicating that the answer was fetched
+  locally rather than querying one of the authorative servers directly. Nevertheless,
+  it shows us the name servers for the domain. The second answer gives us the
+  IP-addresses of the respective servers.
+  
+  Lastly, we will have a look in what would happen if we'd be querying one of the name
+  servers of google.com with a different domain:
+  
+  $ nslookup www.en.wikipedia.org ns2.google.com
+  Server:		ns2.google.com
+  Address:	216.239.34.10#53
+
+  ** server can't find www.en.wikipedia.org.huawei.com: REFUSED
+  
+  The answer obviously couldn't be found, since ns2.google.com is an authorative name
+  server specifically operating for the domain google.com.
