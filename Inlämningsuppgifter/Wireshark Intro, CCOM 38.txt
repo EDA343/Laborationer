@@ -1,0 +1,144 @@
+CCOM 38
+Dennis Bennhage, bennhage@student.chalmers.se.
+Hampus Lidin, lidin@student.chalmers.com
+
+1:
+  DNS is used to fetch the IP-address of the given hostname for a web server.
+  A request by the host is sent to the DNS-server, and the server hopefully
+  responds with the IP-address of the website.
+
+  TCP is responsible for making the transfer of data between two end-points
+  in a secure and reliable fashion. It is also responsible for delivering
+  the right data to the right application upon completed transfer.
+
+  HTTP uses TCP to send the web content of the web site to the host. The
+  content (which usually is in HTML-format) is then interpreted by a web
+  reader.
+
+2:
+  The HTTP GET message was sent at 52.884s, according to Wireshark's
+  measurements, and the HTTP OK message was received at 53.033s.
+  That yields the difference 53.033s - 52.884s and thus it took 149ms.
+
+3:
+  If we take a look in the GET message, we can see two IP-addresses, source
+  and destination. The source in this case is the host, since the host
+  is the one requesting to the server, which then would be the destination.
+  The host IP is then 192.168.43.219, and the server IP 128.119.245.12.
+
+4:
+  As partly seen in the Mac OSX terminal and Windows command window,
+  repectively (the format of the answers have been shortened and
+  rearranged, to display only what we want to see):
+
+      $ ifconfig
+
+      en0:
+	      Flags:        8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	      ETHERNET:     20:c9:d0:7f:0f:25
+		    IPv4 (inet):  Address:   192.168.43.219
+	                    Netmask:   0xffffff00
+	                    Broadcast: 192.168.43.255
+
+	    ----------------------------------------------------------------------------
+
+      C:> ipconfig /all
+
+      Wireless LAN adapter Wireless Network Connection:
+
+      Connection-specific DNS Suffix  . :
+      Description . . . . . . . . . . . : Broadcom 802.11n Network Adapter
+      Physical Address. . . . . . . . . : 20-C9-D0-7F-0F-25
+      DHCP Enabled. . . . . . . . . . . : Yes
+      Autoconfiguration Enabled . . . . : Yes
+      Link-local IPv6 Address . . . . . : fe80::6046:472a:63f5:468e%11(Preferred)
+      IPv4 Address. . . . . . . . . . . : 192.168.43.219(Preferred)
+      Subnet Mask . . . . . . . . . . . : 255.255.255.0
+      Lease Obtained. . . . . . . . . . : den 1 maj 2015 10:46:20
+      Lease Expires . . . . . . . . . . : den 1 maj 2015 11:46:19
+      Default Gateway . . . . . . . . . : 192.168.43.1
+      DHCP Server . . . . . . . . . . . : 192.168.43.1
+      DHCPv6 IAID . . . . . . . . . . . : 237029840
+      DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-1C-36-2B-4E-20-C9-D0-7F-0F-25
+
+      DNS Servers . . . . . . . . . . . : 192.168.43.1
+      NetBIOS over Tcpip. . . . . . . . : Enabled
+
+5:
+  The command "ipconfig /displaydns" in Windows is used to display all the cached
+  domain names stored on the computer. Each entry has a timer that determines how
+  long the entry remains in the cache. It's useful to see which web servers the
+  host most recently has visited.
+
+  If the host for some reason wants to clear the cahce, the "ipconfig /flushdns"
+  command can be used. It will delete each and every entry in the cache. This
+  is useful if the host wants to "restart" a web session.
+
+6:
+  We start by searching the domain www.google.com for it's IP:
+
+      $ nslookup www.google.com
+
+      Server:		192.168.1.1
+      Address:	192.168.1.1#53
+
+      Non-authoritative answer:
+      Name:	www.google.com
+      Address: 216.58.209.132
+
+  Here we see that the local DNS-server with IP-address 192.168.1.1 was queried, and
+  the answer we got was that www.google.com has an IP-address of 216.58.209.132. If
+  we where to exclude the subdomain www from the hostname, nslookup gives us an
+  entirely different answer:
+
+      $ nslookup google.com
+
+      Server:		192.168.1.1
+      Address:	192.168.1.1#53
+
+      Non-authoritative answer:
+      Name:	google.com
+      Address: 80.251.202.24
+      Name:	google.com
+      Address: 80.251.202.35
+      Name:	google.com
+      Address: 80.251.202.26
+      ...
+
+  This is due to the fact that the domains google.com and www.google.com are located
+  in different places (servers), hence the IP-addresses are different.
+
+  Now we want to search for the authorative name servers for google.com:
+
+      $ nslookup -type=NS google.com
+      Server:		192.168.1.1
+      Address:	192.168.1.1#53
+
+      Non-authoritative answer:
+      google.com	nameserver = ns2.google.com.
+      google.com	nameserver = ns1.google.com.
+      google.com	nameserver = ns4.google.com.
+      google.com	nameserver = ns3.google.com.
+
+      Authoritative answers can be found from:
+      ns4.google.com	internet address = 216.239.38.10
+      ns2.google.com	internet address = 216.239.34.10
+      ns1.google.com	internet address = 216.239.32.10
+      ns3.google.com	internet address = 216.239.36.10
+
+  The first answer we got was non-authorative, indicating that the answer was fetched
+  locally rather than querying one of the authorative servers directly. Nevertheless,
+  it shows us the name servers for the domain. The second answer gives us the
+  IP-addresses of the respective servers.
+
+  Lastly, we will have a look in what would happen if we'd be querying one of the name
+  servers of google.com with a different domain:
+
+      $ nslookup www.en.wikipedia.org ns2.google.com
+      Server:		ns2.google.com
+      Address:	216.239.34.10#53
+
+      ** server can't find www.en.wikipedia.org.huawei.com: REFUSED
+
+  The answer obviously couldn't be found, since ns2.google.com is an authorative name
+  server specifically operating for the domain google.com.
