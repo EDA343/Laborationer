@@ -1,0 +1,61 @@
+CCOM 38
+Dennis Bennhage, email.
+Hampus Lidin, hampuslidin@gmail.com
+
+1:
+  DNS is used to fetch the IP-address of the given hostname for a web server.
+  A request by the host is sent to the DNS-server, and the server hopefully
+  responds with the IP-address of the website.
+
+  TCP is responsible for making the transfer of data between two end-points
+  in a secure and reliable fashion. It is also responsible for delivering
+  the right data to the right application upon completed transfer.
+
+  HTTP uses TCP to send the web content of the web site to the host. The
+  content (which usually is in HTML-format) is then interpreted by a web
+  reader.
+
+2:
+  The HTTP GET message was sent at 52.884s, according to Wireshark's
+  measurements, and the HTTP OK message was received at 53.033s.
+  That yields the difference 53.033s - 52.884s and thus it took 149ms.
+
+3:
+  If we take a look in the GET message, we can see two IP-addresses, source
+  and destination. The source in this case is the host, since the host
+  is the one requesting to the server, which then would be the destination.
+  The host IP is then 192.168.43.219, and the server IP 128.119.245.12.
+
+4:
+  As partly seen in the Mac OSX terminal (the format of the answer has
+  been shortened and rearranged to display what we want to see):
+
+  $ ifconfig
+
+  en0:
+    Flags:        8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+    ETHERNET:     20:c9:d0:7f:0f:25
+	  IPv4 (inet):  Address:   192.168.43.219
+                  Netmask:   0xffffff00
+                  Broadcast: 192.168.43.255
+
+6:
+  $ nslookup www.masalakitchen.se
+  Server:		192.168.43.1
+  Address:	192.168.43.1#53
+
+  Non-authoritative answer:
+  www.masalakitchen.se	canonical name = masalakitchen.se.
+  Name:	masalakitchen.se
+  Address: 109.74.1.223
+
+  $ nslookup -type=NS www.masalakitchen.se
+  Server:		192.168.43.1
+  Address:	192.168.43.1#53
+
+  Non-authoritative answer:
+  www.masalakitchen.se	canonical name = masalakitchen.se.
+  masalakitchen.se	nameserver = ns1.smsgruppen.com.
+  masalakitchen.se	nameserver = ns2.smsgruppen.com.
+
+  Authoritative answers can be found from:
