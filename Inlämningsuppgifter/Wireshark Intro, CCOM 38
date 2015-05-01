@@ -1,6 +1,6 @@
 CCOM 38
-Dennis Bennhage, email.
-Hampus Lidin, hampuslidin@gmail.com
+Dennis Bennhage, bennhage@student.chalmers.se.
+Hampus Lidin, lidin@student.chalmers.com
 
 1:
   DNS is used to fetch the IP-address of the given hostname for a web server.
@@ -39,11 +39,11 @@ Hampus Lidin, hampuslidin@gmail.com
 		    IPv4 (inet):  Address:   192.168.43.219
 	                    Netmask:   0xffffff00
 	                    Broadcast: 192.168.43.255
-	    
+
 	    ----------------------------------------------------------------------------
-	                  
+
       C:> ipconfig /all
-  
+
       Wireless LAN adapter Wireless Network Connection:
 
       Connection-specific DNS Suffix  . :
@@ -69,30 +69,30 @@ Hampus Lidin, hampuslidin@gmail.com
   domain names stored on the computer. Each entry has a timer that determines how
   long the entry remains in the cache. It's useful to see which web servers the
   host most recently has visited.
-  
+
   If the host for some reason wants to clear the cahce, the "ipconfig /flushdns"
   command can be used. It will delete each and every entry in the cache. This
   is useful if the host wants to "restart" a web session.
 
 6:
   We start by searching the domain www.google.com for it's IP:
-  
+
       $ nslookup www.google.com
-  
+
       Server:		192.168.1.1
       Address:	192.168.1.1#53
 
       Non-authoritative answer:
       Name:	www.google.com
       Address: 216.58.209.132
-  
+
   Here we see that the local DNS-server with IP-address 192.168.1.1 was queried, and
   the answer we got was that www.google.com has an IP-address of 216.58.209.132. If
   we where to exclude the subdomain www from the hostname, nslookup gives us an
   entirely different answer:
-  
+
       $ nslookup google.com
-  
+
       Server:		192.168.1.1
       Address:	192.168.1.1#53
 
@@ -104,12 +104,12 @@ Hampus Lidin, hampuslidin@gmail.com
       Name:	google.com
       Address: 80.251.202.26
       ...
-  
+
   This is due to the fact that the domains google.com and www.google.com are located
   in different places (servers), hence the IP-addresses are different.
-  
+
   Now we want to search for the authorative name servers for google.com:
-  
+
       $ nslookup -type=NS google.com
       Server:		192.168.1.1
       Address:	192.168.1.1#53
@@ -125,20 +125,20 @@ Hampus Lidin, hampuslidin@gmail.com
       ns2.google.com	internet address = 216.239.34.10
       ns1.google.com	internet address = 216.239.32.10
       ns3.google.com	internet address = 216.239.36.10
-  
+
   The first answer we got was non-authorative, indicating that the answer was fetched
   locally rather than querying one of the authorative servers directly. Nevertheless,
   it shows us the name servers for the domain. The second answer gives us the
   IP-addresses of the respective servers.
-  
+
   Lastly, we will have a look in what would happen if we'd be querying one of the name
   servers of google.com with a different domain:
-  
+
       $ nslookup www.en.wikipedia.org ns2.google.com
       Server:		ns2.google.com
       Address:	216.239.34.10#53
 
       ** server can't find www.en.wikipedia.org.huawei.com: REFUSED
-  
+
   The answer obviously couldn't be found, since ns2.google.com is an authorative name
   server specifically operating for the domain google.com.
