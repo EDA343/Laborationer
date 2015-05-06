@@ -1,0 +1,159 @@
+HTTP)
+  1)
+    SRC:  129.16.216.10
+    DST:  128.119.245.12
+  2)
+    Both using HTTP 1.1.
+  3)
+    200 (Ok)
+  4)
+    Accept-language:  Swedish and English.
+  5)
+    Last-modified:    Wed, 06 May 2015 05:59:01 GMT.
+  6)
+    Content-length:   128 bytes.
+  7)
+    No, since the file to be downloaded wasn't in the cache, so it was being
+    transferred from the server.
+  8)
+    Yes, under the Line-based text data header.
+  9)
+    Yes, because the file hasn't been modified since the last time the file
+    was downloaded.
+  10)
+    304 (Not Modified). No contents.
+  11)
+    1. The GET-message from the web browser.
+  12)
+    200 (OK) from the server.
+  13)
+    4, including the response. The three first messages are 1460+20 = 1480
+    bytes long. The last on is 484+20 = 504 bytes long.
+  14)
+    4, one for the HTML-file and three for the pictures.
+    Respectively: 128.119.245.12, 165.193.140.14 and 128.119.240.90 for the
+    last two.
+  15)
+    They seem to be working in parallel since there is no way of telling
+    if one transfer is done. TCP just keeps receiving messages from the
+    servers and send responses in order to make the complete transfer
+    flow as smooth as possible.
+
+TCP)
+  1)
+    SRC:  129.16.216.10.
+    PORT: 57987.
+  2)
+    DST:  128.119.245.12.
+    PORT: 80.
+  3)
+    3; [SYN] from the host, [SYN, ACK] from the server and [ACK] from the host.
+    The Flags-header.
+  4)
+    1, 1461, 2921, 4381, 5841 and 7301, respectively.
+  5)
+    1460 bytes.
+  6)
+    POST (SEG1):  6.792884s.
+    SEG2:         6.792895s.
+    ACK1:         6.914991s.
+    SEG3:         6.915070s.
+    SEG4:         6.915083s.
+    SEG5:         6.915093s.
+    SEG6:         6.915103s.
+    ACK2:         7.040115s.
+
+  7)
+    a)
+      RTT
+    b)
+      Estimated tRTT
+  8)
+    The next byte that should be sent by the host and acknowledged by the
+    server. The server determines this number by assuring that each prior byte
+    has reached the server and then includes the next byte's number in the
+    Acknowledgment number field.
+  9)
+    Around 300 bytes after a while. It started with a narrower window and then
+    increased the window as packets were sent. Later on the window size was
+    600-700 bytes, until transfer completion.
+  10)
+    All the time. The first ACK message acknowledged the first two segments,
+    and then roughly between 4-10 segments are acknowledged at the same time.
+DNS)
+  1)
+    The Value (IP).
+
+        > nslookup www.webafrica.co.za
+
+        Server:  res1.chalmers.se
+        Address:  129.16.1.53
+
+        Non-authoritative answer:
+        Name:    www.webafrica.co.za
+        Address:  41.185.61.34
+  2)
+    The Values (IPs).
+
+        > nslookup -type=ns ufrj.br
+
+        Server:  res1.chalmers.se
+        Address:  129.16.1.53
+
+        Non-authoritative answer:
+        ufrj.br nameserver = ns4.ufrj.br
+        ufrj.br nameserver = ns.ufrj.br
+        ufrj.br nameserver = ns2.ufrj.br
+        ufrj.br nameserver = ns3.ufrj.br
+
+        ns.ufrj.br      internet address = 146.164.170.11
+        ns2.ufrj.br     internet address = 200.20.116.90
+        ns3.ufrj.br     internet address = 146.164.150.11
+        ns4.ufrj.br     internet address = 200.156.137.11
+  3)
+    The Value (IP).
+
+        > nslookup -type=mx amazon.com ns2.ufrj.br
+
+        Server:  stic-dns2.tic.ufrj.br
+        Address:  200.20.116.90
+
+        *** stic-dns2.tic.ufrj.br can't find amazon.com: Query refused
+
+    We didn't get an answer since ns2.ufrj.br is a dedicated name server for
+    the domain ufrj.br.
+  4)
+    They both use UDP. The reason UDP is used instead of TCP is because no data
+    is being sent, thus the need for a reliable and connected transfer is
+    redundant. Also UDP is a lot faster.
+  5)
+    53.
+  6)
+    53.
+  7)
+    129.16.1.53 are both found in the IP message and by running ipconfig.
+  8)
+    It's a standard query. Flags, transaction ID, number of questions, queries.
+    No RRs are provided.
+  9)
+    Same as in the query message, with the addition of Answers, Authoritative
+    nameservers and Additional records. It contains RRs for the query, one of
+    them being the canonical name (CNAME) for the hostname and the other two
+    being the addresses for two servers. In addition the answers provide TTL.
+  10)
+    No, every image is sent after the initial DNS request. Since the IP-address
+    is known, we don't need to query for it each time we fetch an image from
+    that server.
+  11)
+    The Flags contain the several bits that indicate the status of the message.
+    The Queries contain the requests from the host. The Answers contain the
+    results from the DNS-server. Authoritative nameservers contain the
+    nameservers of the requested hostname. Additional records contain the IP-
+    addresses for the nameservers.
+  12)
+    The first RR is the name for the server; it's meaning depends on the type.
+    The second field is the type of server, in this case it is Type A (Name is
+    then a hostname). The third field is the servers Class (IN (0x0001)). The
+    fourth field is the TTL value for the server's IP-address. The fifth field
+    indicates the data length of the IP-address, in this case 4 bytes (IPv4).
+    The last field states the IP-address of the server.
