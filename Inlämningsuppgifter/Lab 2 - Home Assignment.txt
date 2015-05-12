@@ -1,0 +1,47 @@
+CCOM 38
+Dennis Bennhage,  bennhage@student.chalmers.se
+Hampus Lidin,     lidin@student.chalmers.se
+
+|—————————————————|
+| Home Assignment |
+|—————————————————|
+
+Network:      198. 77. 48.  0 /23 = 198. 77.0011000 0.00000000 /23
+Subnet-mask:  255.255.254.  0     = 255.255.1111111 0.00000000
+
+We need to divide this network into four equally spaced subnets. In order to
+do that, we need to borrow the sufficient bits from the host portion. Since
+4 = 2², we need exactly 2 bits. That leaves 7 bits in the host portion of each
+subnet, which yields 2⁷ - 2 = 126 hosts/subnet.
+
+Subnet 1)
+  Network:    198. 77. 48.  0 /25 = 198. 77. 48.0 0000000 /25
+  Mask:       255.255.255.128     = 255.255.255.1 0000000
+
+  First host: 198. 77. 48.  1 /25 = 198. 77. 48.0 0000001 /25
+  Last host:  198. 77. 48.126 /25 = 198. 77. 48.0 1111110 /25
+  Broadcast:  198. 77. 48.127 /25 = 198. 77. 48.0 1111111 /25
+
+Subnet 2)
+  Network:    198. 77. 48.128 /25 = 198. 77. 48.1 0000000 /25
+  Mask:       255.255.255.128     = 255.255.255.1 0000000
+
+  First host: 198. 77. 48.129 /25 = 198. 77. 48.1 0000001 /25
+  Last host:  198. 77. 48.254 /25 = 198. 77. 48.1 1111110 /25
+  Broadcast:  198. 77. 48.255 /25 = 198. 77. 48.1 1111111 /25
+
+Subnet 3)
+  Network:    198. 77. 49.  0 /25 = 198. 77. 49.0 0000000 /25
+  Mask:       255.255.255.128     = 255.255.255.1 0000000
+
+  First host: 198. 77. 49.  1 /25 = 198. 77. 49.0 0000001 /25
+  Last host:  198. 77. 49.126 /25 = 198. 77. 49.0 1111110 /25
+  Broadcast:  198. 77. 49.127 /25 = 198. 77. 49.0 1111111 /25
+
+Subnet 4)
+  Network:    198. 77. 49.128 /25 = 198. 77. 49.1 0000000 /25
+  Mask:       255.255.255.128     = 255.255.255.1 0000000
+
+  First host: 198. 77. 49.129 /25 = 198. 77. 49.1 0000001 /25
+  Last host:  198. 77. 49.254 /25 = 198. 77. 49.1 1111110 /25
+  Broadcast:  198. 77. 49.255 /25 = 198. 77. 49.1 1111111 /25

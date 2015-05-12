@@ -1,0 +1,77 @@
+CCOM 38
+Dennis Bennhage, bennhage@student.chalmers.se
+Hampus Lidin, lidin@student.chalmers.se
+
+Task 1)
+  a)
+    When running the 'ifconfig' command (in Mac OSX/Unix), you get all
+    information about the different interfaces at the host computer. We want
+    to look at the "Ethernet 0" (en0) interface, which is configured with the
+    IP information we need:
+
+        $ ifconfig
+
+        <output omitted>
+
+        en0:  flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+    	        ether 20:c9:d0:7f:0f:25
+    	        inet6 fe80::22c9:d0ff:fe7f:f25%en0 prefixlen 64 scopeid 0x4
+              inet 129.16.182.106 netmask 0xfffff000 broadcast 129.16.191.255
+            	nd6 options=1<PERFORMNUD>
+            	media: autoselect
+            	status: active
+
+        <output omitted>
+
+    The 'inet' field shows information about the IPv4 configuration for that
+    interface. The global unicast IP-address is then "129.16.182.106/20". The
+    broadcast address for this network is "129.16.191.255/20".
+
+  b)
+    The hostname can be found using the 'nslookup' command on the IP-address
+    obtained in the previous task:
+
+        $ nslookup 129.16.182.106
+
+        Server:		129.16.1.53
+        Address:	129.16.1.53#53
+
+        Non-authoritative answer:
+        106.182.16.129.in-addr.arpa	name = dhcp-182106.eduroam.chalmers.se.
+
+        <output omitted>
+
+    The answer is given by the non-authorative name server
+    "106.182.16.129.in-addr.arpa", which is a locally stored version of the
+    hostname/IP-address entry. The hostname that was given is then
+    "dhcp-182106.eduroam.chalmers.se".
+
+Task 2)
+  a)
+    We can trace a packet route over the internet by using the 'traceroute'
+    command:
+
+  b)
+    'traceroute', as the name suggests, traces the route of an IP-packet over
+    the internet. It is implemented using the "User Datagram Protocol" (UDP),
+    to transport the packet from the host computer to a specified destination.
+    The reason UDP is used over the more reliable "Transmission Control
+    Protocol" (TCP) is that UDP maintains the route for all packets that it
+    sends, which is essential in order for 'traceroute' to work.
+
+    'traceroute' initially sets the 'Time To Live' value to 1 in the IP-header.
+    Then after every three packets it sends, the TTL value increments by one.
+    When the first router then receives the first packet, it will decrement the
+    TTL value by 1, resulting in a value of 0. This means that the packet can
+    not be forwarded any further and an "Internet Control Message Protocol"
+    (ICMP) message is generated. This message goes all the way back to the
+    source. In the mean time, 'traceroute' have started counting the time from
+    when a packet is being sent to when the ICMP message for that packet is
+    received. Then the second package is sent and when a reply is received, the
+    third packet is sent. When the reply for that packet has been received, the
+    TTL value becomes 2. When the fourth packet then arrives at the first
+    router on the way, TTL becomes 1 and the packet is forwarded to the next
+    router. That router then does the same thing and generates an ICMP message
+    that goes back to the source. This is repeated until the TTL is large
+    enough to reach the destination. This way we can put together a table of
+    three roundtrip times for each node on the route.
