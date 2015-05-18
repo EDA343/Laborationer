@@ -116,7 +116,8 @@ Answer.
 
 \item :
 \begin{enumerate}[a)]
-\item 
+\item
+\begin{lstlisting}
 www.chalmers.se:
 
 	HEAD / HTTP/1.0
@@ -133,20 +134,27 @@ www.chalmers.se:
 	X-MS-InvokeApp: 1; RequireReadOnly
 	Date: Mon, 18 May 2015 08:20:33 GMT
 	Connection: close
+\end{lstlisting}	
 
-	The type of web server www.chalmers.se is using is "Microsoft-IIS/7.5".
-	We get the response 401 Unauthorized, which means that we do not have access
-	to URL resources without providing user authentication (log in somewhere with a username and a password). The authentication protocol in this case, which is specified in the WWW-Authenticate field of the HTTP header, is NTLM.
+The type of web server www.chalmers.se is using is "Microsoft-IIS/7.5".
+We get the response 401 Unauthorized, which means that we do not have access
+to URL resources without providing user authentication (log in somewhere with
+a username and a password). The authentication protocol in this case, which
+is specified in the WWW-Authenticate field of the HTTP header, is NTLM.
 
+\begin{lstlisting}
 	Content-Length is the size of the content that is being sent, in octets(bytes).
 	Content-Type indicates what type of media is being sent.
 	SPRequestGuid contains diagnostic information about server problems.
 	X-SharePointHealthScore is a number between 0 and 10 where 0 indicates low server load and 10 indicates high server load.
 	X-Powered-By specifies which technology is used to support the web application.
 	MicrosoftSharePointTeamServices indicates which version of Microsoft SharePoint is installed.
-	X-MS-InvokeApp specifies if the application wants to use DirectInvoke, which lets a user open for example a PDF without first saving it to their computer. RequiredReadOnly means that it opens in Read-Only mode.
+	X-MS-InvokeApp specifies if the application wants to use DirectInvoke, which lets a user open for example a PDF without first saving it to their computer. 
+\end{lstlisting}
 
+RequiredReadOnly means that it opens in Read-Only mode.
 
+\begin{lstlisting}
 	www.tue.nl:
 
 	HEAD / HTTP/1.0
@@ -164,9 +172,15 @@ www.chalmers.se:
 
 
 	www.tue.nl is using the web server type "Apache/2.2.22 (Ubuntu)".
-	301 Move Permanently means that the resource we are requesting has been redirected tot a new URL. The new URL is specified in the Location field. In this case www.tue.nl is redirecting to http://www.tue.nl/.
-	The Vary field specifies which fields of the request header to take into account when trying to find the right object in the cache.
+\end{lstlisting}
+
+301 Move Permanently means that the resource we are requesting has been redirected
+to a new URL. The new URL is specified in the Location field. In this case www.tue.nl
+is redirecting to http://www.tue.nl/. The Vary field specifies which fields of the
+request header to take into account when trying to find the right object in the cache.
+
 \item 
+\begin{lstlisting}
 www.chalmers.se:
 
 	HEAD / HTTP/1.1
@@ -188,7 +202,9 @@ www.chalmers.se:
 	Vary: Accept-Encoding
 	Connection: close
 	Content-Type: text/html; charset=iso-8859-1
+\end{lstlisting}
 \item 
+\begin{lstlisting}
 www.chalmers.se:
 
 	HEAD / HTTP/1.1
@@ -222,10 +238,17 @@ www.chalmers.se:
 	Content-Type: text/html; charset=utf-8
 
 	Connection closed by foreign host.
+\end{lstlisting}
 
-	In an HTTP 1.1 request you have to specify the name of the host of the resource you are requesting. You can also specify a port number, but we did not do that since it defaults to 80 if you do not specify one. If we do not include a host name in the request, the server responds with 400 Bad Request, as we saw in 4b.
+In an HTTP 1.1 request you have to specify the name of the host of the resource
+you are requesting. You can also specify a port number, but we did not do that
+since it defaults to 80 if you do not specify one. If we do not include a host
+name in the request, the server responds with 400 Bad Request, as we saw in 4b.
 
-	Say for example that we are hosting several different websites on a single machine. They all share an IP address. To be able to send the request to the correct website, we need to specify a host name. This is what the host header field is used for; differentiating between multiple hosts on the same IP.
+Say for example that we are hosting several different websites on a single machine.
+They all share an IP address. To be able to send the request to the correct
+website, we need to specify a host name. This is what the host header field is used
+for; differentiating between multiple hosts on the same IP.
 
 \end{enumerate}
 
@@ -240,61 +263,72 @@ Answer.
 \item :
 \begin{enumerate}[a)]
 \item 
-The "nslookup" command can be used to find information about the DNS servers of a domain.
+The {\outp nslookup} command can be used to find information about the DNS servers of a domain.
+We will use {\outp utoronto.ca} (University of Toronto) for this task.  Here are the results of
+our {\outp nslookup} for {\outp utoronto.ca}:
 
-	We will use utoronto.ca (University of Toronto) for this task. 
-	Here are the results of our nslookup for utoronto.ca:
-
-	>nslookup -type=mx utoronto.ca
-	Server:  res1.chalmers.se
-	Address:  129.16.1.53
-
-	Non-authoritative answer:
-	utoronto.ca     MX preference = 10, mail exchanger = k.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = d.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = b.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = c.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = g.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = a.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = l.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = e.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = f.mx.utoronto.ca
-	utoronto.ca     MX preference = 10, mail exchanger = j.mx.utoronto.ca
-
-	utoronto.ca     nameserver = bay.cs.utoronto.ca
-	utoronto.ca     nameserver = ns2.utoronto.ca
-	utoronto.ca     nameserver = ns1.utoronto.ca
-	utoronto.ca     nameserver = ns7.utoronto.ca
-	bay.cs.utoronto.ca      internet address = 128.100.1.1
-	ns1.utoronto.ca internet address = 128.100.100.129
-	ns2.utoronto.ca internet address = 128.100.72.168
-	ns7.utoronto.ca internet address = 162.243.71.42
-
+\begin{lstlisting}
+> nslookup -type=mx utoronto.ca
 	
-	To find the mail servers we set the type parameter to MX(Mail eXchange).
-	We find that there are 10 mail servers for utoronto.ca, with all of them having equal priority (preference = 10). All of them having equal priority means that we do not care which of the mail servers we use first. 
+Server:  res1.chalmers.se
+Address:  129.16.1.53
 
-	We also find the DNS servers and their respective IP addresses. 
+Non-authoritative answer:
+utoronto.ca     MX preference = 10, mail exchanger = k.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = d.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = b.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = c.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = g.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = a.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = l.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = e.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = f.mx.utoronto.ca
+utoronto.ca     MX preference = 10, mail exchanger = j.mx.utoronto.ca
+
+utoronto.ca     nameserver = bay.cs.utoronto.ca
+utoronto.ca     nameserver = ns2.utoronto.ca
+utoronto.ca     nameserver = ns1.utoronto.ca
+utoronto.ca     nameserver = ns7.utoronto.ca
+bay.cs.utoronto.ca      internet address = 128.100.1.1
+ns1.utoronto.ca internet address = 128.100.100.129
+ns2.utoronto.ca internet address = 128.100.72.168
+ns7.utoronto.ca internet address = 162.243.71.42
+\end{lstlisting}
+
+To find the mail servers we set the type parameter to {\outp MX} (Mail eXchange).
+We find that there are 10 mail servers for {\outp utoronto.ca}, with all of them
+having equal priority (preference = 10). All of them having equal priority
+means that we do not care which of the mail servers we use first. 
+
+We also find the DNS servers and their respective IP addresses. 
 \item 
-We use www.google.com for this task.
+We use {\outp www.google.com} for this task.
 
-	>nslookup www.google.com
-	Server:  	res1.chalmers.se
-	Address:  	129.16.1.53
+\begin{lstlisting}
+> nslookup www.google.com
 
-	Non-authoritative answer:
-	Name:    	www.google.com
-	Addresses:  2a00:1450:4010:c02::68
-          		74.125.205.106
-          		74.125.205.103
-          		74.125.205.105
-          		74.125.205.99
-          		74.125.205.147
-          		74.125.205.104
+Server:  	res1.chalmers.se
+Address:  	129.16.1.53
 
-    We can see that www.google.com has 6 different IP addresses. Multiple IP addresses can be used to balance load between web servers. There can be several copies of the same web site, each having its own IP address but all using the same DNS servers. The first user who sends a request is sent to the first IP address, the second person to the second IP address and so on. This reduces the amount of requests to each web server and provides redundancy in case a web server should go down.s
+Non-authoritative answer:
+Name:    	www.google.com
+Addresses:  2a00:1450:4010:c02::68
+         		74.125.205.106
+         		74.125.205.103
+         		74.125.205.105
+         		74.125.205.99
+         		74.125.205.147
+         		74.125.205.104
+\end{lstlisting}
 
-    Multiple IP addresses can also be used to have different IP addresses for different services.
+We can see that www.google.com has 6 different IP addresses. Multiple IP addresses
+can be used to balance load between web servers. There can be several copies of the
+same web site, each having its own IP address but all using the same DNS servers. The
+first user who sends a request is sent to the first IP address, the second person to
+the second IP address and so on. This reduces the amount of requests to each web server
+and provides redundancy in case a web server should go down.s
+
+Multiple IP addresses can also be used to have different IP addresses for different services.
 \end{enumerate}
 
 \item :
