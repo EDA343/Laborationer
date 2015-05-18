@@ -1,0 +1,153 @@
+\documentclass[a4paper,9pt,fleqn]{article}
+
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage{listings}
+\usepackage{pgf}
+\usepackage{hyperref}
+\setlength{\parindent}{0mm}
+\setlength{\itemsep}{0ex}
+\setlength{\parskip}{2ex}
+\setlength{\parsep}{2ex}
+\setlength{\partopsep}{0ex}
+\setlength{\topsep}{0ex}
+
+\newenvironment{outp}{\fontfamily{pcr}\selectfont}{\courier}
+
+\lstset{
+	aboveskip=5mm,
+	belowskip=5mm,
+	xleftmargin=5mm,
+	language=bash,
+	basicstyle=\scriptsize\outp,
+	tabsize=2
+}
+
+
+\title{
+{\bf Report}\\
+\vspace{0.2cm}
+%
+Home Assignment, CCOM38\\
+\vspace{1cm}
+%
+{\large Dennis Bennhage \& Hampus Lidin}\\
+\vspace{10cm}
+%
+May 18th, 2015
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\begin{enumerate}[{Task} 1]
+\item :
+\begin{enumerate}[a)]
+\item 
+When running the {\outp ifconfig} command (in Mac OSX/Unix), you get all the
+information about the different interfaces at the host computer. Running the
+command in a home network, we get the following information
+about the {\outp Ethernet0} (en0) interface:
+			
+\begin{lstlisting}
+$ ifconfig
+
+<output omitted>
+
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+		 ether 20:c9:d0:7f:0f:25
+		 inet6 fe80::22c9:d0ff:fe7f:f25\%en0 prefixlen 64 scopeid 0x4
+		 inet 192.168.1.119 netmask 0xffffff00 broadcast 192.168.1.255
+		 nd6 options=1<PERFORMNUD>
+		 media: autoselect
+		 status: active
+
+<output omitted>
+\end{lstlisting}
+
+The {\outp inet} field shows information about the IPv4 configuration for that
+interface. The unicast IP-address is then {\outp 129.16.182.106/20} and the
+broadcast address for this network is {\outp 129.16.191.255/20}. However, the
+IP-address is within the private address space, so the router has to
+convert it into a globally unique IP-address using {\it Network Address
+Translation} (NAT). This address is provided to the router by the {\it Internet
+Service Provider} (ISP), and all traffic in the local network going out
+from the router will then use this address to communicate through the
+Internet.
+    
+\item 
+The hostname can be found using the {\outp nslookup} command on the IP-address
+obtained in the previous task:
+
+\begin{lstlisting}
+$ nslookup 192.168.1.1
+
+Server:		192.168.1.1
+Address:	192.168.1.1#53
+
+119.1.168.192.in-addr.arpa	name = Hampus-MBP.huawei.com.
+\end{lstlisting}
+
+The answer is given by the name server {\outp 119.1.168.192.in-addr.arpa}. The
+hostname that was given is {\outp Hampus-MBP.huawei.com}.
+\end{enumerate}
+
+\item :
+\begin{enumerate}[a)]
+\item 
+Answer.  
+\item 
+Answer.
+\end{enumerate}
+
+\item :
+\begin{enumerate}[a)]
+\item 
+Answer.  
+\item 
+Answer.
+\end{enumerate}
+
+\item :
+\begin{enumerate}[a)]
+\item 
+Answer.  
+\item 
+Answer. 
+\item 
+Answer.
+\end{enumerate}
+
+\item :
+\begin{enumerate}[a)]
+\item 
+Answer.  
+\item 
+Answer.
+\end{enumerate}
+
+\item :
+\begin{enumerate}[a)]
+\item 
+Answer.  
+\item 
+Answer.
+\end{enumerate}
+
+\item :
+\begin{enumerate}[a)]
+\item 
+Answer.  
+\item 
+Answer.
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
