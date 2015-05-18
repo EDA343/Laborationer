@@ -113,3 +113,118 @@ Task 3)
     transport layer also checks the validity of the segment, then decapsulate
     it and passes it on to the right application. The application then checks
     it message and use the data.
+
+
+4a:
+	www.chalmers.se:
+
+	HEAD / HTTP/1.0
+
+	HTTP/1.1 401 Unauthorized
+	Content-Length: 16
+	Content-Type: text/html; charset=utf-8
+	Server: Microsoft-IIS/7.5
+	SPRequestGuid: 1b34a246-0f4b-4010-9e90-6fd42daab1e4
+	X-SharePointHealthScore: 0
+	WWW-Authenticate: NTLM
+	X-Powered-By: ASP.NET
+	MicrosoftSharePointTeamServices: 14.0.0.7102
+	X-MS-InvokeApp: 1; RequireReadOnly
+	Date: Mon, 18 May 2015 08:20:33 GMT
+	Connection: close
+
+	The type of web server www.chalmers.se is using is "Microsoft-IIS/7.5".
+	We get the response 401 Unauthorized, which means that we do not have access
+	to URL resources without providing user authentication (log in somewhere with a username and a password). The authentication protocol in this case, which is specified in the WWW-Authenticate field of the HTTP header, is NTLM.
+
+	Content-Length is the size of the content that is being sent, in octets(bytes).
+	Content-Type indicates what type of media is being sent.
+	SPRequestGuid contains diagnostic information about server problems.
+	X-SharePointHealthScore is a number between 0 and 10 where 0 indicates low server load and 10 indicates high server load.
+	X-Powered-By specifies which technology is used to support the web application.
+	MicrosoftSharePointTeamServices indicates which version of Microsoft SharePoint is installed.
+	X-MS-InvokeApp specifies if the application wants to use DirectInvoke, which lets a user open for example a PDF without first saving it to their computer. RequiredReadOnly means that it opens in Read-Only mode.
+
+
+	www.tue.nl:
+
+	HEAD / HTTP/1.0
+
+	HTTP/1.1 301 Moved Permanently
+	Date: Mon, 18 May 2015 08:24:17 GMT
+	Server: Apache/2.2.22 (Ubuntu)
+	X-Powered-By: PHP/5.3.10-1ubuntu3.18
+	Location: http://www.tue.nl/
+	Vary: Accept-Encoding
+	Content-Type: text/html
+
+
+	Connection closed by foreign host.
+
+
+	www.tue.nl is using the web server type "Apache/2.2.22 (Ubuntu)".
+	301 Move Permanently means that the resource we are requesting has been redirected tot a new URL. The new URL is specified in the Location field. In this case www.tue.nl is redirecting to http://www.tue.nl/.
+	The Vary field specifies which fields of the request header to take into account when trying to find the right object in the cache.
+
+
+4b:
+	www.chalmers.se:
+
+	HEAD / HTTP/1.1
+
+	HTTP/1.1 400 Bad Request
+	Content-Length: 334
+	Content-Type: text/html; charset=us-ascii
+	Server: Microsoft-HTTPAPI/2.0
+	Date: Mon, 18 May 2015 09:15:38 GMT
+	Connection: close
+
+	www.tue.nl:
+
+	HEAD / HTTP/1.1
+
+	HTTP/1.1 400 Bad Request
+	Date: Mon, 18 May 2015 09:16:38 GMT
+	Server: Apache/2.2.22 (Ubuntu)
+	Vary: Accept-Encoding
+	Connection: close
+	Content-Type: text/html; charset=iso-8859-1
+
+4c:
+	www.chalmers.se:
+
+	HEAD / HTTP/1.1
+	Host: www.chalmers.se
+
+	HTTP/1.1 302 Redirect
+	Content-Length: 164
+	Content-Type: text/html; charset=UTF-8
+	Location: http://www.chalmers.se/Pages/default.aspx
+	Server: Microsoft-IIS/7.5
+	SPRequestGuid: f25d9db4-5345-4c46-b7fc-292c52258273
+	X-SharePointHealthScore: 0
+	X-Powered-By: ASP.NET
+	MicrosoftSharePointTeamServices: 14.0.0.7102
+	X-MS-InvokeApp: 1; RequireReadOnly
+	Date: Mon, 18 May 2015 09:27:28 GMT
+
+	www.tue.nl:
+
+	HEAD / HTTP/1.1
+	Host: www.tue.nl
+
+	HTTP/1.1 200 OK
+	Date: Mon, 18 May 2015 09:28:56 GMT
+	Server: Apache/2.2.22 (Ubuntu)
+	X-Powered-By: PHP/5.3.10-1ubuntu3.18
+	Set-Cookie: fe_typo_user=e4577ddec4a01568b6eefae39b0dcf4b; path=/
+	Expires: Mon, 18 May 2015 10:21:29 GMT
+	Cache-Control: max-age=3144
+	Vary: Accept-Encoding
+	Content-Type: text/html; charset=utf-8
+
+	Connection closed by foreign host.
+
+	In an HTTP 1.1 request you have to specify the name of the host of the resource you are requesting. You can also specify a port number, but we did not do that since it defaults to 80 if you do not specify one. If we do not include a host name in the request, the server responds with 400 Bad Request, as we saw in 4b.
+
+	Say for example that we are hosting several different websites on a single machine. They all share an IP address. To be able to send the request to the correct website, we need to specify a host name. This is what the host header field is used for; differentiating between multiple hosts on the same IP.
