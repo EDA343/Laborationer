@@ -248,11 +248,9 @@ RequiredReadOnly means that it opens in Read-Only mode.
 
 
 	Connection closed by foreign host.
-
-
-	{\outp www.tue.nl} is using the web server type {\outp Apache/2.2.22 (Ubuntu)}.
 \end{lstlisting}
 
+{\outp www.tue.nl} is using the web server type {\outp Apache/2.2.22 (Ubuntu)}.
 301 Move Permanently means that the resource we are requesting has been redirected
 to a new URL. The new URL is specified in the Location field. In this case www.tue.nl
 is redirecting to http://www.tue.nl/. The Vary field specifies which fields of the
@@ -309,7 +307,7 @@ www.chalmers.se:
 	X-MS-InvokeApp: 1; RequireReadOnly
 	Date: Mon, 18 May 2015 09:27:28 GMT
 
-	www.tue.nl:
+www.tue.nl:
 
 	HEAD / HTTP/1.1
 	Host: www.tue.nl
@@ -353,27 +351,46 @@ information as cookies on the computer.
 When using the latest version of {\it Firefox} web browser, you can view what cookies
 are stored on your computer. By going to the {\it Privacy} tab in {\it Options} and
 clicking {\it remove individual cookies}, you can see all cookies in a list. As an example,
-the following text shows the contents of a cookie after visiting Chalmers website:
+the following text shows the contents of a cookie after visiting Amazon's website:
 
 \newpage
 
-\begin{alltt}
-\outp
-\small
-         Name:	__utmc
-      Content:	192209784
-       Domain:	.chalmers.se
+\begin{lstlisting}[basicstyle=\small]
+         Name:	skin
+      Content:	noskin
+       Domain:	.amazon.com
          Path:	/
      Send For:	Any type of connection
       Expires:	At end of session
-\end{alltt}
+\end{lstlisting}
 
-Here we see a cookie named {\outp \underline{\hspace{4mm}}utmc} that was stored while browsing
-{\outp www.chalmers.se}. The cookie also contains information about the
-domain, the path to the location of the file and when the cookie expires.
- 
+Here we see a cookie named {\outp skin} that was stored while browsing
+{\outp www.amazon.com}, with the content {\outp noskin}. The cookie also
+contains information about the domain, the path to the location of the
+file and when the cookie expires.
+\\
+\\ 
 \item 
-Answer.
+Using {\outp telnet}, we can find out about the cookie header-line:
+
+\begin{lstlisting}[basicstyle=\small]
+> telnet www.amazon.com 80
+
+HEAD / HTTP/1.1
+Host: www.amazon.com
+
+Response:
+	HTTP/1.1 405 MethodNotAllowed
+	Date: Tue, 19 May 2015 09:03:25 GMT
+	Server: Server
+	Set-Cookie: skin=noskin; path=/; domain=.amazon.com
+	x-amz-id-1: 0FVPDJH451JD9GYZHS13
+	allow: POST, GET
+	x-amz-id-2: P3gXI/xBsUT4mGC2g9T5r+4aKEy3ZerKX7j/3CX7RtXvEwMkmMDi21dVusYxtvZI
+	Vary: Accept-Encoding,User-Agent
+	Content-Type: text/html; charset=ISO-8859-1
+\end{lstlisting}
+
 \end{enumerate}
 
 \item :
