@@ -41,7 +41,7 @@ Hampus Lidin,	lidin@student.chalmers.se
 \\
 \vspace{10cm}
 %
-May 19th, 2015
+May 21st, 2015
 }
 
 \date{}
@@ -228,10 +228,9 @@ Trace complete.
 \item :
 	\begin{enumerate}[a)]
 		\item
-		Blablabla.
+		Results for the request HEAD / HTTP/1.0 for www.chalmers.se:
 
 \begin{lstlisting}
-www.chalmers.se:
 
 	HEAD / HTTP/1.0
 
@@ -263,9 +262,12 @@ www.chalmers.se:
 		MicrosoftSharePointTeamServices indicates which version of Microsoft SharePoint is installed.
 		X-MS-InvokeApp specifies if the application wants to use DirectInvoke, which lets a user open for example a PDF without first saving it to their computer. 
 		RequiredReadOnly means that it opens in Read-Only mode.
+		
+		\newpage
+		Results for the request HEAD / HTTP/1.0 for www.tue.nl:
 
 \begin{lstlisting}
-	www.tue.nl:
+	
 
 	HEAD / HTTP/1.0
 
@@ -288,10 +290,9 @@ www.chalmers.se:
 		request header to take into account when trying to find the right object in the cache.
 		\\
 		\item 
-		Blablabla.
+		Results for the request HEAD / HTTP/1.1 for www.chalmers.se and www.tue.nl:
 
 \begin{lstlisting}
-www.chalmers.se:
 
 	HEAD / HTTP/1.1
 
@@ -314,13 +315,12 @@ www.chalmers.se:
 	Content-Type: text/html; charset=iso-8859-1
 \end{lstlisting}
 		
-		Blablabla.
+		Something was not right with the syntax of our request.
 		\\
 		\item 
-		Blablabla.
+		The host field was missing from the requests, here are the results from the correct requests:
 
 \begin{lstlisting}
-www.chalmers.se:
 
 	HEAD / HTTP/1.1
 	Host: www.chalmers.se
@@ -337,7 +337,6 @@ www.chalmers.se:
 	X-MS-InvokeApp: 1; RequireReadOnly
 	Date: Mon, 18 May 2015 09:27:28 GMT
 
-www.tue.nl:
 
 	HEAD / HTTP/1.1
 	Host: www.tue.nl
